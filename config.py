@@ -1,0 +1,17 @@
+import os
+
+TELEGRAM_TOKEN = os.environ.get('TELEGRAM_TOKEN')
+
+SOURCE_DOMAIN = os.environ.get('SOURCE_DOMAIN')
+PLAYER_DOMAIN = os.environ.get('PLAYER_DOMAIN')
+
+ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME')
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
+USER_PASSWORD = os.environ.get('USER_PASSWORD')
+
+GMAIL_MODULE_ACCOUNT = os.environ.get('GMAIL_MODULE_ACCOUNT')
+GMAIL_MODULE_PASSWORD = os.environ.get('GMAIL_MODULE_PASSWORD')
+
+CAPTCHA_API_KEY = os.environ.get('CAPTCHA_API_KEY')
+CAPTCHA_SITE_KEY = os.environ.get('CAPTCHA_SITE_KEY')
+CAPTCHA_URL = os.environ.get('CAPTCHA_URL')
