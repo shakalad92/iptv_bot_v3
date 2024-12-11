@@ -6,7 +6,6 @@ class CaptchaSolver:
         self.solver = TwoCaptcha(api_key)
         self.site_key = site_key
         self.site_url = site_url
-        # self.bot = telegram_bot
 
     def solve_captcha(self):
         try:

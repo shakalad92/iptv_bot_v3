@@ -18,7 +18,7 @@ async def cmd_start(message: Message):
     await message.answer("IPSERVICE bot is now active")
 
 
-@dp.message(Command(commands=['create', 'recharge', 'activate']))
+@dp.message(Command(commands=['create', 'recharge', 'activate', 'cplayer']))
 async def handle_message(message: Message, command: CommandObject):
     command_name = command.command
     args = command.args
