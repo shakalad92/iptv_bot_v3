@@ -17,7 +17,7 @@ from pages.player.playlist_page import PlaylistPage as PlayerPlaylistPage
 
 def test_create_user(email, amount, sb):
     # Prepare user_data
-    new_user_email: str = f"{USER_EMAIL_PREFIX}+{email}@gmail.com"
+    new_user_email: str = f"{USER_EMAIL_PREFIX}{email}@gmail.com"
     user_name: str = ''.join(random.choices(string.ascii_letters, k=6)).lower()
     user_password: str = USER_PASSWORD
 
