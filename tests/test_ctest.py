@@ -1,13 +1,11 @@
 import random
 import string
 
-from config import USER_EMAIL_PREFIX, USER_PASSWORD, ADMIN_USERNAME, ADMIN_PASSWORD
+from config import USER_EMAIL_PREFIX, USER_PASSWORD
 
 from pages.source.signup_page import SignUpPage as SourceSignupPage
 from pages.source.login_page import LoginPage
-from pages.source.money_transfer_page import MoneyTransferPage
 from pages.source.channel_groups_page import ChannelGroupsPage
-from pages.source.overview_page import OverviewPage
 from pages.source.playlist_page import PlayListPage
 from pages.source.tariff_page import TariffPage
 
@@ -24,19 +22,6 @@ def test_create_user(phone_number, amount, sb):
     # Register as new user source
     signup_page = SourceSignupPage(sb)
     signup_page.register_new_user(email=new_user_email, password=user_password, user_name=user_name)
-
-    # Login as Admin
-    login_page = LoginPage(sb)
-    login_page.login(email=ADMIN_USERNAME, password=ADMIN_PASSWORD)
-
-    # Transfer money to the new user
-    money_transfer_page = MoneyTransferPage(sb)
-    money_transfer_page.transfer_money_to_the_user(email=new_user_email, amount=amount)
-
-    # Check Admin balance and logout
-    overview_page = OverviewPage(sb)
-    overview_page.check_balance()
-    overview_page.logout_source()
 
     # Login as new user
     login_page = LoginPage(sb)

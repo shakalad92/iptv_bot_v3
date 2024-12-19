@@ -8,7 +8,7 @@ class PlaylistPage(BasePage):
     URL = f"https://{PLAYER_DOMAIN}/playlist/original"
 
     locators = {
-        'playlist_name': "input[name='name']",
+        'playlist_name': "input[id='plName']",
         'playlist_link_toggle': "div#sources_toggle:nth-child(2)",
         'playlist_link': "input[name='source']",
         'playlist_upload_input': "input#inplaylist",

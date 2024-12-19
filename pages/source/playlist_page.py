@@ -6,7 +6,7 @@ class PlayListPage(BasePage):
     URL = f"https://{SOURCE_DOMAIN}/playlist/download"
 
     locators = {
-        'playlist_link': "div[id='pllink2']",
+        'playlist_link': "div[id='pllink']",
         'playlist_download': "button[id='setFileType']"
     }
 
