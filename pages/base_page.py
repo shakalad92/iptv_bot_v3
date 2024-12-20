@@ -11,5 +11,9 @@ class BasePage:
         self.sb.get(f"https://{SOURCE_DOMAIN}/auth/signout")
         self.notify("Successfully logged out.")
 
+    def bypass_cloudflare_check(self, url):
+        self.sb.uc_open_with_reconnect(url, 4)
+        self.sb.uc_gui_click_captcha()
+
     def notify(self, message: str) -> None:
         self._bot.send_message(message=message)
