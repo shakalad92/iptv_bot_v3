@@ -30,8 +30,9 @@ class PlaylistPage(BasePage):
 
             self.sb.update_text(self.locators['playlist_name'], playlist_name)
             self.sb.click(self.locators['playlist_link_toggle'])
+            self.notify(f"Trying to add playlist link: {playlist_link}")
             self.sb.update_text(self.locators['playlist_link'], playlist_link)
-            self.sb.sleep(2)
+            self.sb.sleep(10)
 
             self.sb.click(self.locators['submit_btn'])
             self.sb.sleep(2)
