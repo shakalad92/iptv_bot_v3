@@ -26,6 +26,7 @@ class PlaylistPage(BasePage):
     def create_playlist(self, playlist_link: str, playlist_name):
         while True:
             self.open_playlist_page()
+            self.notify("Create playlist page was opened.")
 
             self.sb.update_text(self.locators['playlist_name'], playlist_name)
             self.sb.click(self.locators['playlist_link_toggle'])
@@ -35,6 +36,5 @@ class PlaylistPage(BasePage):
             self.sb.sleep(2)
 
             if self.sb.is_element_visible(self.locators["success_message"]):
+                self.notify("Playlist was successfully created.")
                 break
-
-        # TODO implement message to telegram chat

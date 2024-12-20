@@ -1,7 +1,15 @@
-from config import SOURCE_DOMAIN
+from config import SOURCE_DOMAIN, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID
+from message_handler.telegram_message_handler import TelegramMessageHandler
+
+
 class BasePage:
     def __init__(self, driver):
         self.sb = driver
+        self._bot = TelegramMessageHandler(token=TELEGRAM_TOKEN, chat_id=TELEGRAM_CHAT_ID)
 
-    def logout_source(self):
+    def logout_source(self) -> None:
         self.sb.get(f"https://{SOURCE_DOMAIN}/auth/signout")
+        self.notify("Successfully logged out.")
+
+    def notify(self, message: str) -> None:
+        self._bot.send_message(message=message)

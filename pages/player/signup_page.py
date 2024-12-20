@@ -24,6 +24,7 @@ class SignUpPage(BasePage):
 
     def register_new_user(self, email: str, password: str, username: str) -> None:
         self.open_signup_page()
+        self.notify("Player registration page was opened.")
 
         self.sb.update_text(self.locators['username'], username)
         self.sb.update_text(self.locators['email'], email)
@@ -32,8 +33,9 @@ class SignUpPage(BasePage):
 
         self.sb.click(self.locators['submit_btn'])
 
+        self.notify("Waiting for activation link")
         self.sb.sleep(10)
         activation_link = get_player_registration_activation_link()
 
         self.sb.open(activation_link)
-        print(f"Account activated for email: {email}")
+        self.notify(f"Account activated for email: {email}")

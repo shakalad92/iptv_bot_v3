@@ -25,7 +25,7 @@ class SignUpPage(BasePage):
 
     def register_new_user(self, email, password, user_name):
         self.open_signup_page()
-
+        self.notify("Registration page was opened.")
         self.sb.update_text(self.locators['username'], user_name)
         self.sb.update_text(self.locators['email'], email)
         self.sb.update_text(self.locators['password'], password)
@@ -37,14 +37,17 @@ class SignUpPage(BasePage):
         self.sb.update_text(self.locators['email'], email)
 
         time.sleep(10)
+        self.notify("Waiting for Verification code.")
         verification_code = get_code()
+        self.notify(f"Verification code: {verification_code}")
         self.sb.update_text(self.locators['verification_code'], verification_code)
 
         self.sb.click(self.locators['submit_btn'])
         self.sb.sleep(5)
 
-        # todo implement message of a created user in telegram
-        print(f"Email: {email}\n"
-              f"Password: standard user password\n"
-              f"Username: {user_name}\n"
-              f"Verification Code: {verification_code}")
+        self.notify("""
+                f"Email: {email}\n"
+                f"Password: standard user password\n"
+                f"Username: {user_name}\n"
+                f"Verification Code: {verification_code}"
+                """)

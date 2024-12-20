@@ -18,11 +18,10 @@ class PlayListPage(BasePage):
 
     def get_playlist_link(self):
         self.open_playlist_page()
-
+        self.notify("Playlist page was opened")
         self.sb.wait_for_element_visible(self.locators['playlist_link'], timeout=10)
         playlist_link = self.sb.get_text(self.locators['playlist_link'])
 
-        # TODO implement message to a telegram bot
+        self.notify(f"Playlist was created. Link: {playlist_link}")
 
         return playlist_link
-        # print(f"Playlist link: {playlist_link}")

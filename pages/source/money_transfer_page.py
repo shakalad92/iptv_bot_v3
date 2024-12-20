@@ -31,6 +31,7 @@ class MoneyTransferPage(BasePage):
 
     def transfer_money_to_the_user(self, email, amount="1"):
         self.open_money_transfer_page()
+        self.notify("Money transfer page was opened")
 
         self.sb.select_option_by_value(self.locators["confirmation_method"], "email")
         self.sb.update_text(self.locators["recipient_email"], email)
@@ -42,6 +43,7 @@ class MoneyTransferPage(BasePage):
 
         if self.sb.is_element_visible(self.locators["warning_message"]):
             warning_message = self.sb.get_text(self.locators["warning_message"])
+            self.notify(f"Warning: {warning_message}")
             raise Exception(f"### {warning_message}")
 
         self.sb.wait_for_element_visible(self.locators["verification_code"], timeout=15)
@@ -49,4 +51,4 @@ class MoneyTransferPage(BasePage):
         verification_code = get_transaction_verification_code()
         self.sb.update_text(self.locators["verification_code"], verification_code)
         self.sb.click(self.locators["submit_btn"])
-        self.sb.sleep(5)
+        self.notify(f"Money transferred to {email} by amount: {amount}")
