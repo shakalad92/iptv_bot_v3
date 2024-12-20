@@ -6,8 +6,6 @@ from pages.base_page import BasePage
 from email_service.email_handler import get_player_registration_activation_link
 
 class SignUpPage(BasePage):
-    URL = f"https://{PLAYER_DOMAIN}/account/registration"
-
     locators = {
         'username': "input[name='username']",
         'email': "input[name='email']",
@@ -18,9 +16,10 @@ class SignUpPage(BasePage):
 
     def __init__(self, sb):
         super().__init__(sb)
+        self.url = f"https://{PLAYER_DOMAIN}/account/registration"
 
     def open_signup_page(self):
-        self.sb.open(self.URL)
+        self.bypass_cloudflare_check(self.url)
 
     def register_new_user(self, email: str, password: str, username: str) -> None:
         self.open_signup_page()

@@ -7,8 +7,6 @@ from email_service.email_handler import get_source_registration_verification_cod
 
 
 class SignUpPage(BasePage):
-    URL = f"https://{SOURCE_DOMAIN}/welcome/signup/e804c47574f73528"
-
     locators = {
         'username': "input[name='username']",
         'email': "input[name='email']",
@@ -20,12 +18,14 @@ class SignUpPage(BasePage):
 
     def __init__(self, sb):
         super().__init__(sb)
+        self.url = f"https://{SOURCE_DOMAIN}/welcome/signup/e804c47574f73528"
 
     def open_signup_page(self):
-        self.sb.open(self.URL)
+        self.bypass_cloudflare_check(self.url)
 
     def register_new_user(self, email, password, user_name):
         self.open_signup_page()
+
         self.notify("Registration page was opened.")
         self.sb.update_text(self.locators['username'], user_name)
         self.sb.update_text(self.locators['email'], email)
