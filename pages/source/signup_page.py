@@ -5,6 +5,7 @@ from config import SOURCE_DOMAIN
 from pages.base_page import BasePage
 from email_service.email_handler import get_source_registration_verification_code as get_code
 
+
 class SignUpPage(BasePage):
     URL = f"https://{SOURCE_DOMAIN}/welcome/signup/e804c47574f73528"
 
@@ -45,9 +46,5 @@ class SignUpPage(BasePage):
         self.sb.click(self.locators['submit_btn'])
         self.sb.sleep(5)
 
-        self.notify("""
-                f"Email: {email}\n"
-                f"Password: standard user password\n"
-                f"Username: {user_name}\n"
-                f"Verification Code: {verification_code}"
-                """)
+        self.notify(
+            f"Email: {email}\nPassword: standard user password\nUsername: {user_name}\nVerification Code: {verification_code}")

@@ -21,7 +21,7 @@ def generate_pytest_args(command_name: str, args: list) -> list:
         "ctest": ["--phone_number"]
     }
 
-    pytest_args = ['-v', f'test_{command_name}.py']
+    pytest_args = ['--headed', '-v', f'test_{command_name}.py']
     arg_keys = command_config.get(command_name)
 
     if not arg_keys:
