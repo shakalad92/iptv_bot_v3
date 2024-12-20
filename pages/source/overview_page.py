@@ -18,8 +18,9 @@ class OverviewPage(BasePage):
 
     def check_balance(self):
         self.open_overview_page()
+        self.notify("Overview page was opened")
         self.sb.wait_for_element_visible(self.locators["balance"], timeout=10)
 
         balance_text = self.sb.get_text(self.locators["balance"])
 
-        # todo implement message to telegram
+        self.notify(f"Admin Balance: {balance_text}")

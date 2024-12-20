@@ -19,8 +19,10 @@ class LoginPage(BasePage):
 
     def login(self, email, password):
         self.open_login_page()
+        self.notify("Player Login page was opened")
         self.sb.sleep(2)
         self.sb.update_text(self.locators['email'], email)
         self.sb.update_text(self.locators['password'], password)
         self.sb.click(self.locators['submit_btn'])
-        print(f"Logged in as: {email}")
+
+        self.notify(f"Logged in as: {email}")
