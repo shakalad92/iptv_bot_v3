@@ -38,6 +38,7 @@ def test_create_user(phone_number, amount, sb):
     # Get playlist link and logout
     playlist_page = PlayListPage(sb)
     playlist_link: str = playlist_page.get_playlist_link()
+    playlist_page.open_main_page()
 
     # Register as new user player
     signup_page = PlayerSignupPage(sb)
