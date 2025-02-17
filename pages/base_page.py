@@ -1,3 +1,5 @@
+
+import time
 from config import SOURCE_DOMAIN, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID
 from message_handler.telegram_message_handler import TelegramMessageHandler
 
@@ -17,3 +19,7 @@ class BasePage:
 
     def notify(self, message: str) -> None:
         self._bot.send_message(message=message)
+
+    def open_main_page(self):
+        self.sb.get(f"https://{SOURCE_DOMAIN}/cabinet")
+        time.sleep(3)
