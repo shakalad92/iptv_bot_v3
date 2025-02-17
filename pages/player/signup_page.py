@@ -6,8 +6,6 @@ from pages.base_page import BasePage
 from email_service.email_handler import get_player_registration_activation_link
 
 class SignUpPage(BasePage):
-    URL = f"https://{PLAYER_DOMAIN}/account/registration"
-
     locators = {
         'username': "input[name='username']",
         'email': "input[name='email']",
@@ -18,12 +16,14 @@ class SignUpPage(BasePage):
 
     def __init__(self, sb):
         super().__init__(sb)
+        self.url = f"https://{PLAYER_DOMAIN}/account/registration"
 
     def open_signup_page(self):
-        self.sb.open(self.URL)
+        self.bypass_cloudflare_check(self.url)
 
     def register_new_user(self, email: str, password: str, username: str) -> None:
         self.open_signup_page()
+        self.notify("Player registration page was opened.")
 
         self.sb.update_text(self.locators['username'], username)
         self.sb.update_text(self.locators['email'], email)
@@ -32,8 +32,9 @@ class SignUpPage(BasePage):
 
         self.sb.click(self.locators['submit_btn'])
 
+        self.notify("Waiting for activation link")
         self.sb.sleep(10)
         activation_link = get_player_registration_activation_link()
 
         self.sb.open(activation_link)
-        print(f"Account activated for email: {email}")
+        self.notify(f"Account activated for email: {email}")

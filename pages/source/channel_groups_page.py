@@ -32,3 +32,5 @@ class ChannelGroupsPage(BasePage):
         for key, value in self.locators.items():
             self.sb.click(self.locators[key])
         self.sb.sleep(2)
+
+        self.notify("Channel list was configured")

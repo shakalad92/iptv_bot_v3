@@ -16,11 +16,9 @@ class TariffPage(BasePage):
     def try_click_button(self, button_locator):
             if self.sb.wait_for_element_clickable(button_locator, timeout=10):
                 self.sb.click(button_locator)
-                # todo implement message to telegram
+                self.notify(f"{button_locator} button was clicked")
             else:
-                # todo implement message to telegram
-                pass
-
+                self.notify(f"{button_locator} button is not active")
 
     def open_tariff_page(self):
         self.sb.open(self.URL)

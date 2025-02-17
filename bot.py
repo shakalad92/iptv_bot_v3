@@ -21,7 +21,7 @@ def generate_pytest_args(command_name: str, args: list) -> list:
         "ctest": ["--phone_number"]
     }
 
-    pytest_args = ['-v', f'test_{command_name}.py']
+    pytest_args = ['--headed', '-v', f'test_{command_name}.py']
     arg_keys = command_config.get(command_name)
 
     if not arg_keys:
@@ -93,11 +93,13 @@ async def handle_command(message: Message, command: CommandObject):
         result = await loop.run_in_executor(None, run_test, command_name, *args_list)
 
         if result == 0:
-            await message.reply(f"Test {command_name} successfully passed!")
+            await message.reply(f"✅ Test `{command_name}` successfully passed!")
         else:
-            await message.reply(f"Test {command_name} failed.")
+            await message.reply(f"❌ Test `{command_name}` failed with errors. Check logs for details.")
     except ValueError as e:
-        await message.reply(f"Error: {str(e)}")
+        await message.reply(f"⚠️ Error: {str(e)}")
+    except Exception as e:
+        await message.reply(f"❌ An unexpected error occurred: {str(e)}")
 
 async def main():
     await dp.start_polling(bot)

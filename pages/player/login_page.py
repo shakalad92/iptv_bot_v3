@@ -3,8 +3,6 @@ from config import PLAYER_DOMAIN
 from pages.base_page import BasePage
 
 class LoginPage(BasePage):
-    URL = f"https://{PLAYER_DOMAIN}/account/login"
-
     locators = {
         'email': "input[name='email']",
         'password': "input[name='password']",
@@ -13,14 +11,17 @@ class LoginPage(BasePage):
 
     def __init__(self, sb):
         super().__init__(sb)
+        self.url = f"https://{PLAYER_DOMAIN}/account/login"
 
     def open_login_page(self):
-        self.sb.open(self.URL)
+        self.bypass_cloudflare_check(self.url)
 
     def login(self, email, password):
         self.open_login_page()
+        self.notify("Player Login page was opened")
         self.sb.sleep(2)
         self.sb.update_text(self.locators['email'], email)
         self.sb.update_text(self.locators['password'], password)
         self.sb.click(self.locators['submit_btn'])
-        print(f"Logged in as: {email}")
+
+        self.notify(f"Logged in as: {email}")
