@@ -33,6 +33,7 @@ class LoginPage(BasePage):
         formatted_time = current_time.strftime('%a %d %b %Y')
         self.sb.uc_open_with_reconnect(self.url, 4)
         self.sb.uc_gui_click_captcha()
+        self.notify(f"Login page was opened. Time: {formatted_time}")
 
     def login(self, email, password):
         self.open_login_page()
@@ -42,14 +43,18 @@ class LoginPage(BasePage):
         self.sb.click(self.locators['submit_btn'])
 
         if self.sb.is_element_present(self.locators['captcha_iframe']):
+            self.notify("Captcha found on the page")
 
             self.sb.update_text(self.locators['email'], email)
             self.sb.update_text(self.locators['password'], password)
 
             captcha_solution = self.captcha_solver.solve_captcha()
+            self.notify(f"Captcha solved: {captcha_solution}")
             self.set_captcha_response(captcha_solution)
 
             self.sb.click(self.locators['submit_btn'])
+        else:
+            self.notify("Login success")
 
     def set_captcha_response(self, captcha_solution):
         script = f"document.getElementById('g-recaptcha-response').innerHTML='{captcha_solution}';"

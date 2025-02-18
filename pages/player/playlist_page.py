@@ -26,15 +26,21 @@ class PlaylistPage(BasePage):
     def create_playlist(self, playlist_link: str, playlist_name):
         while True:
             self.open_playlist_page()
+            self.notify("Create playlist page was opened.")
 
             self.sb.update_text(self.locators['playlist_name'], playlist_name)
             self.sb.click(self.locators['playlist_link_toggle'])
-            self.sb.update_text(self.locators['playlist_link'], playlist_link)
+            self.notify(f"Trying to add playlist link: {playlist_link}")
+
+            # for some reason on dedicated virtual server, selenium pastes link with one slash removed.
+            # original - http://url.com, pasted - http:/url.com
+            # self.sb.update_text(self.locators['playlist_link'], playlist_link)
+
+            self.sb.execute_script(f'document.querySelector(\'input[name="source"]\').value = "{playlist_link}";')
 
             self.sb.click(self.locators['submit_btn'])
             self.sb.sleep(2)
 
             if self.sb.is_element_visible(self.locators["success_message"]):
+                self.notify("Playlist was successfully created.")
                 break
-
-        # TODO implement message to telegram chat

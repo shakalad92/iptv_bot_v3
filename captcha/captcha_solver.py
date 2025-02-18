@@ -13,7 +13,6 @@ class CaptchaSolver:
                 sitekey=self.site_key,
                 url=self.site_url)
         except Exception as e:
-            # self.bot.send_process_step_to_telegram(f"### CAPTCHA ERROR {e}")
             raise Exception
         else:
             return result['code']
