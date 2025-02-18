@@ -1,5 +1,6 @@
 import random
 import string
+import time
 
 from config import USER_EMAIL_PREFIX, USER_PASSWORD
 
@@ -26,6 +27,7 @@ def test_create_user(phone_number, amount, sb):
     # Login as new user
     login_page = LoginPage(sb)
     login_page.login(email=new_user_email, password=USER_PASSWORD)
+    time.sleep(3)
 
     # Config new user's channel group
     channel_group_page = ChannelGroupsPage(sb)
@@ -38,7 +40,6 @@ def test_create_user(phone_number, amount, sb):
     # Get playlist link and logout
     playlist_page = PlayListPage(sb)
     playlist_link: str = playlist_page.get_playlist_link()
-    playlist_page.open_main_page()
 
     # Register as new user player
     signup_page = PlayerSignupPage(sb)
