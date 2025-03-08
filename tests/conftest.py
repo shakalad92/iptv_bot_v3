@@ -30,11 +30,6 @@ def playlist_link(request):
 
 @pytest.fixture
 def sb():
-    with SB(uc=True, headless=False, incognito=True) as sb:
-        # sb.add_chrome_arg("--no-sandbox")
-        # sb.add_chrome_arg("--disable-dev-shm-usage")
-        # sb.add_chrome_arg("--disable-blink-features=AutomationControlled")
-        # sb.add_chrome_arg("--disable-infobars")
-
+    with SB(uc=True, test=True, locale="en") as sb:
         sb.maximize_window()
         yield sb
