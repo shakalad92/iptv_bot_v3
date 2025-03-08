@@ -30,6 +30,6 @@ def playlist_link(request):
 
 @pytest.fixture
 def sb():
-    with SB(uc=True, test=True, locale="en") as sb:
+    with SB(uc=True, locale="en") as sb:
         sb.maximize_window()
         yield sb
