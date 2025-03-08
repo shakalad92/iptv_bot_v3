@@ -18,7 +18,8 @@ class LoginPage(BasePage):
 
     def open_login_page(self):
         current_time = datetime.now().strftime('%a %d %b %Y')
-        self.bypass_cloudflare_check(self.url)
+        self.sb.uc_open_with_reconnect(self.url, 4)
+        self.sb.uc_gui_click_captcha()
         self.notify(f"✅ Login page was opened. Time: {current_time}")
 
     def login(self, email, password):
