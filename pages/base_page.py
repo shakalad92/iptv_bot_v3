@@ -22,7 +22,7 @@ class BasePage:
 
     def bypass_cloudflare_check(self, url):
         # self.sb.get("about:blank")
-        # self.sb.driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {"source": JS_INTERCEPT})
+        self.sb.driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {"source": JS_INTERCEPT})
         self.sb.activate_cdp_mode(url)
         self.sb.uc_gui_click_captcha()
 
