@@ -23,10 +23,7 @@ def generate_pytest_args(command_name: str, args: list) -> list:
     }
 
     pytest_args = [
-        '--headed',
-        '-v',
-        f'test_{command_name}.py',
-        'browser-args=--no-sandbox'
+        f'test_{command_name}.py'
     ]
 
     arg_keys = command_config.get(command_name)
