@@ -31,6 +31,19 @@ def playlist_link(request):
 
 @pytest.fixture
 def sb():
-    with SB(uc=True) as sb:
+    with SB(
+        uc=True,
+        headless=False,
+        incognito=True,
+    ) as sb:
+        sb.driver.execute_cdp_cmd(
+            "Page.addScriptToEvaluateOnNewDocument",
+            {"source": "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"}
+        )
+
+        sb.driver_options.add_argument("--no-sandbox")
+        sb.driver_options.add_argument("--disable-dev-shm-usage")
+        sb.driver_options.add_argument("--disable-gpu")
+        sb.driver_options.add_argument("--disable-software-rasterizer")
         sb.maximize_window()
         yield sb
