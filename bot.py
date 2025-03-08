@@ -25,9 +25,8 @@ def generate_pytest_args(command_name: str, args: list) -> list:
     pytest_args = [
         '--headed',
         '-v',
-        '--chromium-arg=--no-sandbox',  # ✅ Убирает ошибку про sandbox
-        '--chromium-arg=--disable-dev-shm-usage',  # ✅ Устраняет проблемы с памятью в контейнерах
-        f'test_{command_name}.py'
+        f'test_{command_name}.py',
+        'browser-args=--no-sandbox'
     ]
 
     arg_keys = command_config.get(command_name)
