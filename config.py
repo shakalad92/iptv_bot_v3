@@ -24,3 +24,24 @@ GMAIL_SOURCE_PLAYER_PASSWORD = os.environ.get('GMAIL_SOURCE_PLAYER_PASSWORD')
 CAPTCHA_API_KEY = os.environ.get('CAPTCHA_API_KEY')
 CAPTCHA_SITE_KEY = os.environ.get('CAPTCHA_SITE_KEY')
 CAPTCHA_URL = os.environ.get('CAPTCHA_URL')
+
+# JAVASCRIPT INTERCEPT
+JS_INTERCEPT = '''
+window.captchaParams = null;
+const i = setInterval(() => {
+    if (window.turnstile) {
+        clearInterval(i);
+        window.turnstile.render = (a,b) => {
+            window.captchaParams = {
+                websiteKey: b.sitekey,
+                data: b.cData,
+                pagedata: b.chlPageData,
+                action: b.action,
+                userAgent: navigator.userAgent
+            };
+            window.tsCallback = b.callback;
+            return 'foo';
+        };
+    }
+},10);
+'''
