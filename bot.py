@@ -11,6 +11,7 @@ from config import TELEGRAM_TOKEN
 bot = Bot(token=TELEGRAM_TOKEN)
 dp = Dispatcher()
 
+
 def generate_pytest_args(command_name: str, args: list) -> list:
     command_config = {
         "create": ["--phone_number", "--amount"],
@@ -21,10 +22,15 @@ def generate_pytest_args(command_name: str, args: list) -> list:
         "ctest": ["--phone_number"]
     }
 
-    # pytest_args = ['--headed', '-v', f'test_{command_name}.py']
-    pytest_args = ['--headed', '-v', '--browser-args="--no-sandbox,--disable-dev-shm-usage"', f'test_{command_name}.py']
-    arg_keys = command_config.get(command_name)
+    pytest_args = [
+        '--headed',
+        '-v',
+        '--chromium-arg=--no-sandbox',  # ✅ Убирает ошибку про sandbox
+        '--chromium-arg=--disable-dev-shm-usage',  # ✅ Устраняет проблемы с памятью в контейнерах
+        f'test_{command_name}.py'
+    ]
 
+    arg_keys = command_config.get(command_name)
     if not arg_keys:
         raise ValueError(f"Unknown command: {command_name}")
 
@@ -34,7 +40,9 @@ def generate_pytest_args(command_name: str, args: list) -> list:
     for key, value in zip(arg_keys, args):
         pytest_args.extend([key, value])
 
+    print(f"Generated pytest arguments: {pytest_args}")  # 🔥 DEBUG
     return pytest_args
+
 
 def run_test(command_name, *args):
     test_dir = os.path.join(os.path.dirname(__file__), 'tests')
@@ -42,16 +50,18 @@ def run_test(command_name, *args):
 
     try:
         pytest_args = generate_pytest_args(command_name, args)
-        print(f"Running Pytest with arguments: {pytest_args}")
+        print(f"Running Pytest with arguments: {' '.join(pytest_args)}")  # 🔥 DEBUG
         result = pytest.main(pytest_args)
         return result
     except Exception as e:
         print(f"Error running test: {e}")
         return 1
 
+
 @dp.message(CommandStart())
 async def cmd_start(message: Message):
     await message.answer("IPService bot is now active!")
+
 
 @dp.message(Command(commands=["help"]))
 async def cmd_help(message: Message):
@@ -102,8 +112,10 @@ async def handle_command(message: Message, command: CommandObject):
     except Exception as e:
         await message.reply(f"❌ An unexpected error occurred: {str(e)}")
 
+
 async def main():
     await dp.start_polling(bot)
+
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
