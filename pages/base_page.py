@@ -21,10 +21,10 @@ class BasePage:
         self.notify("✅ YOU HAVE LOGGED OUT")
 
     def bypass_cloudflare_check(self, url):
-        self.sb.get("about:blank")
-        self.sb.driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {"source": JS_INTERCEPT})
-        # self.sb.uc_open_with_reconnect(url, 4)
-        # self.sb.uc_gui_click_captcha()
+        # self.sb.get("about:blank")
+        # self.sb.driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {"source": JS_INTERCEPT})
+        self.sb.activate_cdp_mode(url)
+        self.sb.uc_gui_click_captcha()
 
         captcha_params = self.get_captcha_params()
         if not captcha_params:
