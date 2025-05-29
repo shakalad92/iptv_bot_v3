@@ -20,7 +20,8 @@ class SignUpPage(BasePage):
         super().__init__(sb)
 
     def open_signup_page(self):
-        self.sb.open(self.URL)
+        self.sb.uc_open_with_reconnect(self.URL, 4)
+        self.sb.uc_gui_click_captcha()
 
     def register_new_user(self, email: str, password: str, username: str) -> None:
         self.open_signup_page()

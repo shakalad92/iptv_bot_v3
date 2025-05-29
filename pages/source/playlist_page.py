@@ -21,8 +21,8 @@ class PlayListPage(BasePage):
 
         self.sb.wait_for_element_visible(self.locators['playlist_link'], timeout=10)
         playlist_link = self.sb.get_text(self.locators['playlist_link'])
+        print(f"Playlist link: {playlist_link}")
 
         # TODO implement message to a telegram bot
 
         return playlist_link
-        # print(f"Playlist link: {playlist_link}")

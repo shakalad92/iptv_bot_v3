@@ -15,7 +15,8 @@ class LoginPage(BasePage):
         super().__init__(sb)
 
     def open_login_page(self):
-        self.sb.open(self.URL)
+        self.sb.uc_open_with_reconnect(self.URL, 4)
+        self.sb.uc_gui_click_captcha()
 
     def login(self, email, password):
         self.open_login_page()
